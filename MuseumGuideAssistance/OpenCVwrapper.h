@@ -28,6 +28,5 @@ public:
 
 private:
     cv::Point2d opticalCenter;
-    TagDetectionArray detectionsleft;
-    nlohmann::json CamParams;
+    TagDetectionArray detections;
 };

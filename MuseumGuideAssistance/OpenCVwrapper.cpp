@@ -10,18 +10,18 @@ cv::Mat OpenCVwrapper::FindApriltags(cv::Mat InputImage)
 
     clock_t start = clock();
 
-    tagdetector.process(InputImage, opticalCenter, detectionsleft);
+    tagdetector.process(InputImage, opticalCenter, detections);
 
     clock_t end = clock();
 
     //Debug cout
     std::cout << std::endl;
-    std::cout << "Got " << detectionsleft.size() << " detections in " << double(end - start) / CLOCKS_PER_SEC << " seconds.\n";
+    std::cout << "Got " << detections.size() << " detections in " << double(end - start) / CLOCKS_PER_SEC << " seconds.\n";
 
-    cv::Mat img = tagfamily.superimposeDetections(InputImage, detectionsleft);
+    cv::Mat img = tagfamily.superimposeDetections(InputImage, detections);
 
-    for (size_t i = 0; i < detectionsleft.size(); ++i) {
-        const TagDetection& d = detectionsleft[i];
+    for (size_t i = 0; i < detections.size(); ++i) {
+        const TagDetection& d = detections[i];
         cv::putText(img, std::to_string(d.id), d.cxy, cv::FONT_ITALIC, 1.5, cv::Scalar(0, 0, 255), 3);
         std::cout << " - Detection: " << "\n"
             << "\tid = " << d.id << "\n"
