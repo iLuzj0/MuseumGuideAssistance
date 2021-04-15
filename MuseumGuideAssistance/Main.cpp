@@ -2,19 +2,51 @@
 //
 
 #include <iostream>
+#include "OpenCVwrapper.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
+    OpenCVwrapper imageProcessor;
+    cv::VideoCapture cap; //
+
+    cap.open("http://192.168.1.172:8080/video");
+    if (!cap.isOpened())  // if not success, exit program
+    {
+        std::cout << "Cannot open the video cam" << std::endl;
+        return -1;
+    }
+
+    double dWidth = cap.get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
+    double dHeight = cap.get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
+
+    std::cout << "Frame size : " << dWidth << " x " << dHeight << std::endl;
+
+    int frameNum = 0;
+
+    cv::namedWindow("CapturedFrame", cv::WINDOW_AUTOSIZE); //create a window called "MyVideo"
+    cv::namedWindow("TagsFound", cv::WINDOW_AUTOSIZE);
+    cv::moveWindow("TagsFound", 1000, 600);
+    cv::moveWindow("CapturedFrame", 180, 600);
+
+    while (1)
+    {
+        cv::Mat frame;
+        
+        frameNum++;
+
+        bool bSuccess = cap.read(frame); // read a new frame from video
+
+        if (!bSuccess) //if not success, break loop
+        {
+            std::cout << "Cannot read a frame from video stream" << std::endl;
+            break;
+        }
+        
+        cv::imshow("CapturedFrame", frame); //show the frame in "MyVideo" window
+        if (frameNum % 6 == 0) {
+            cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
+        }
+        cv::waitKey(1);
+    }
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
