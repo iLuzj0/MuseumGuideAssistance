@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
         if (frameNum % 6 == 0) {
             cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
         }
-        cv::waitKey(1);
+        if(cv::waitKey(1)>=0) break;
     }
     return 0;
 }
