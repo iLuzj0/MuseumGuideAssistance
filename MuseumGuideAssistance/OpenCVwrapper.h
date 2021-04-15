@@ -21,30 +21,6 @@
 
 #pragma once
 
-typedef struct TagTestOptions {
-
-    TagTestOptions() :
-        show_debug_info(false),
-        show_timing(false),
-        show_results(false),
-        be_verbose(false),
-        no_images(false),
-        generate_output_files(false),
-        params(),
-        family_str(DEFAULT_TAG_FAMILY),
-        error_fraction(1) {
-    }
-    bool show_debug_info;
-    bool show_timing;
-    bool show_results;
-    bool be_verbose;
-    bool no_images;
-    bool generate_output_files;
-    TagDetectorParams params;
-    std::string family_str;
-    double error_fraction;
-} TagTestOptions;
-
 class OpenCVwrapper
 {
 public:
