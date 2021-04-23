@@ -4,10 +4,32 @@
 #include <iostream>
 #include "OpenCVwrapper.h"
 
+struct internalParameters
+{
+    double solverEps;
+    int solverMaxIters;
+    bool fastSolving;
+    double filterAlpha;
+
+    internalParameters()
+    {
+        solverEps = 1e-7;
+        solverMaxIters = 50;
+        fastSolving = true;
+        filterAlpha = 0.1;
+    }
+};
+
 int main(int argc, char* argv[])
 {
     OpenCVwrapper imageProcessor;
     cv::VideoCapture cap; //
+    cv::TermCriteria solverTermCrit = cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
+        30, 0.001);
+    cv::Mat perViewErrors;
+    cv::Mat cameraMat;
+    cv::Mat distMat;
+    cv::Mat stdDeviations;
 
     cap.open("http://192.168.1.172:8080/video");
     if (!cap.isOpened())  // if not success, exit program
@@ -31,7 +53,6 @@ int main(int argc, char* argv[])
     while (1)
     {
         cv::Mat frame;
-        
         frameNum++;
 
         bool bSuccess = cap.read(frame); // read a new frame from video
@@ -44,7 +65,16 @@ int main(int argc, char* argv[])
         
         cv::imshow("CapturedFrame", frame); //show the frame in "MyVideo" window
         if (frameNum % 6 == 0) {
-            cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
+            if (imageProcessor.detectAndParseChessboard(frame)) {
+                cv::calibrateCamera(imageProcessor.objectPoints, imageProcessor.imagePoints,
+                    cv::Size(720, 480), cameraMat,
+                    distMat, cv::noArray(), cv::noArray(),
+                    stdDeviations, cv::noArray(), perViewErrors,
+                    0, solverTermCrit);
+            }
+            std::cout << "CameraMatrix " << cameraMat << "DistCoeffs " << distMat;
+            cv::imshow("TagsFound", frame); //show the frame in "MyVideo" window
+            //cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
         }
         if(cv::waitKey(1)>=0) break;
     }
