@@ -1,8 +1,10 @@
 // MuseumGuideAssistance.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include "UDPSocketClient.h"
 #include <iostream>
 #include "OpenCVwrapper.h"
+#include "CameraCalibration.h"
 
 struct internalParameters
 {
@@ -23,6 +25,9 @@ struct internalParameters
 int main(int argc, char* argv[])
 {
     OpenCVwrapper imageProcessor;
+    CameraCalibration cameraCalibration = CameraCalibration::CameraCalibration();
+    UDPSocket myUDPConnection("192.168.1.172", 3002, 3010);
+
     cv::VideoCapture cap; //
     cv::TermCriteria solverTermCrit = cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
         30, 0.001);
@@ -55,6 +60,12 @@ int main(int argc, char* argv[])
         cv::Mat frame;
         frameNum++;
 
+        char* data = myUDPConnection.ReciveData();
+
+        if (data[0] == '0') {
+            std::cout << "Recived data about image.";
+        }
+
         bool bSuccess = cap.read(frame); // read a new frame from video
 
         if (!bSuccess) //if not success, break loop
@@ -65,16 +76,8 @@ int main(int argc, char* argv[])
         
         cv::imshow("CapturedFrame", frame); //show the frame in "MyVideo" window
         if (frameNum % 6 == 0) {
-            if (imageProcessor.detectAndParseChessboard(frame)) {
-                cv::calibrateCamera(imageProcessor.objectPoints, imageProcessor.imagePoints,
-                    cv::Size(720, 480), cameraMat,
-                    distMat, cv::noArray(), cv::noArray(),
-                    stdDeviations, cv::noArray(), perViewErrors,
-                    0, solverTermCrit);
-            }
-            std::cout << "CameraMatrix " << cameraMat << "DistCoeffs " << distMat;
-            cv::imshow("TagsFound", frame); //show the frame in "MyVideo" window
-            //cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
+            cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
+            cameraCalibration.createInputImages(frame, frameNum);
         }
         if(cv::waitKey(1)>=0) break;
     }
