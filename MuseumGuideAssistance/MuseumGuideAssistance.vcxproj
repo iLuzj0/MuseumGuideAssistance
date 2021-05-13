@@ -145,13 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraCalibration.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenCVwrapper.cpp" />
     <ClCompile Include="UDPSocketClient.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraCalibration.h" />
     <ClInclude Include="OpenCVwrapper.h" />
     <ClInclude Include="UDPSocketClient.h" />
   </ItemGroup>

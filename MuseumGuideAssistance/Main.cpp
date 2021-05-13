@@ -3,8 +3,9 @@
 
 #include "UDPSocketClient.h"
 #include <iostream>
+#include <string>
+#include <fstream>
 #include "OpenCVwrapper.h"
-#include "CameraCalibration.h"
 
 struct internalParameters
 {
@@ -25,16 +26,11 @@ struct internalParameters
 int main(int argc, char* argv[])
 {
     OpenCVwrapper imageProcessor;
-    CameraCalibration cameraCalibration = CameraCalibration::CameraCalibration();
-    UDPSocket myUDPConnection("192.168.1.172", 3002, 3010);
 
+    UDPSocket myUDPConnection("192.168.1.255", 3002, 3010);
+
+    bool needBrodcasting = true;
     cv::VideoCapture cap; //
-    cv::TermCriteria solverTermCrit = cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
-        30, 0.001);
-    cv::Mat perViewErrors;
-    cv::Mat cameraMat;
-    cv::Mat distMat;
-    cv::Mat stdDeviations;
 
     cap.open("http://192.168.1.172:8080/video");
     if (!cap.isOpened())  // if not success, exit program
@@ -46,15 +42,9 @@ int main(int argc, char* argv[])
     double dWidth = cap.get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
     double dHeight = cap.get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
 
-    std::cout << "Frame size : " << dWidth << " x " << dHeight << std::endl;
-
     int frameNum = 0;
 
-    cv::namedWindow("CapturedFrame", cv::WINDOW_AUTOSIZE); //create a window called "MyVideo"
-    cv::namedWindow("TagsFound", cv::WINDOW_AUTOSIZE);
-    cv::moveWindow("TagsFound", 1000, 600);
-    cv::moveWindow("CapturedFrame", 180, 600);
-
+    //Main app loop
     while (1)
     {
         cv::Mat frame;
@@ -62,24 +52,47 @@ int main(int argc, char* argv[])
 
         char* data = myUDPConnection.ReciveData();
 
-        if (data[0] == '0') {
-            std::cout << "Recived data about image.";
+        if (data[0] == 'c') {
+            needBrodcasting = false;
+        }
+
+        if (needBrodcasting) {
+            std::string line;
+            std::ifstream IPFile;
+            int offset;
+            const char* search0;      // search pattern
+            search0 = "IPv4 Address. . . . . . . . . . . :";
+            system("ipconfig > ip.txt");
+
+            IPFile.open("ip.txt");
+            if (IPFile.is_open())
+            {
+                while (!IPFile.eof())
+                {
+                    std::getline(IPFile, line);
+                    if ((offset = line.find(search0, 0)) != std::string::npos)
+                    {
+                        line.erase(0, 39);
+                        myUDPConnection.SendUDPData(line);
+                        IPFile.close();
+                    }
+                }
+            }
         }
 
         bool bSuccess = cap.read(frame); // read a new frame from video
 
-        if (!bSuccess) //if not success, break loop
-        {
+        //if not success, break loop
+        if (!bSuccess)  {
             std::cout << "Cannot read a frame from video stream" << std::endl;
             break;
         }
-        
-        cv::imshow("CapturedFrame", frame); //show the frame in "MyVideo" window
-        if (frameNum % 6 == 0) {
-            cv::imshow("TagsFound", imageProcessor.FindApriltags(frame)); //show the frame in "MyVideo" window
-            cameraCalibration.createInputImages(frame, frameNum);
+        else {
+            if (data[0] == 't') {
+                imageProcessor.FindApriltags(frame);
+
+            }
         }
-        if(cv::waitKey(1)>=0) break;
     }
     return 0;
 }
