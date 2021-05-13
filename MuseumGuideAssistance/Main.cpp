@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
                 std::string ID = ImageInfo["ID"];
                 std::cout << ID;
                 if (ID == std::to_string(imageProcessor.FindApriltags(frame))) {
-                    myUDPConnection.SendUDPData(ImageInfo["Info"]);
+                    myUDPConnection.SendUDPData(nlohmann::to_string(ImageInfo));
                 }
 
             }
