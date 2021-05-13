@@ -3,11 +3,11 @@
 TagFamily tagfamily(DEFAULT_TAG_FAMILY);
 TagDetector tagdetector(tagfamily);
 
-cv::Mat OpenCVwrapper::FindApriltags(cv::Mat InputImage)
+int OpenCVwrapper::FindApriltags(cv::Mat InputImage)
 {
     opticalCenter.x = InputImage.cols * 0.5;
     opticalCenter.y = InputImage.rows * 0.5;
-
+    int tagID;
     clock_t start = clock();
 
     tagdetector.process(InputImage, opticalCenter, detections);
@@ -23,10 +23,11 @@ cv::Mat OpenCVwrapper::FindApriltags(cv::Mat InputImage)
     for (size_t i = 0; i < detections.size(); ++i) {
         const TagDetection& d = detections[i];
         cv::putText(img, std::to_string(d.id), d.cxy, cv::FONT_ITALIC, 1.5, cv::Scalar(0, 0, 255), 3);
-        std::cout << " - Detection: " << "\n"
-            << "\tid = " << d.id << "\n"
-            << "\tTag center = " << d.cxy << "\n"
-            << "\trotation = " << d.rotation << "\n\n";
+        //std::cout << " - Detection: " << "\n"
+        //    << "\tid = " << d.id << "\n"
+        //    << "\tTag center = " << d.cxy << "\n"
+        //    << "\trotation = " << d.rotation << "\n\n";
+        tagID = d.id;
     }
-    return img;
+    return tagID;
 }

@@ -28,15 +28,16 @@ int main(int argc, char* argv[])
 {
     OpenCVwrapper imageProcessor;
     nlohmann::json ImageInfo;
-    UDPSocket myUDPConnection("192.168.1.255", 3002, 3010);
 
+    UDPSocket myUDPConnection("192.168.1.255", 3002, 3010);
     bool needBrodcasting = true;
     cv::VideoCapture cap; //
     std::string recIP;
-
+    std::ifstream i("file.json");
+    i >> ImageInfo;
     while (needBrodcasting) {
         char* data = myUDPConnection.ReciveData();
-
+        
         if (data[0] != (char) 0) {
             std::cout << data;
             recIP = data;
@@ -99,7 +100,12 @@ int main(int argc, char* argv[])
 
         else {
             if (data[0] == 't') {
-                imageProcessor.FindApriltags(frame);
+                std::string ID = ImageInfo["ID"];
+                std::cout << ID;
+                if (ID == std::to_string(imageProcessor.FindApriltags(frame))) {
+                    myUDPConnection.SendUDPData(ImageInfo["Info"]);
+                }
+
             }
         }
     }

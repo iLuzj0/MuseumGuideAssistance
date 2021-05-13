@@ -24,7 +24,7 @@
 class OpenCVwrapper
 {
 public:
-    cv::Mat FindApriltags(cv::Mat InputImage);
+    int FindApriltags(cv::Mat InputImage);
 
 private:
     cv::Point2d opticalCenter;
