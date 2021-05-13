@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <JSON/json.hpp>
 #include "OpenCVwrapper.h"
 
 struct internalParameters
@@ -26,33 +27,19 @@ struct internalParameters
 int main(int argc, char* argv[])
 {
     OpenCVwrapper imageProcessor;
-
+    nlohmann::json ImageInfo;
     UDPSocket myUDPConnection("192.168.1.255", 3002, 3010);
 
     bool needBrodcasting = true;
     cv::VideoCapture cap; //
+    std::string recIP;
 
-    cap.open("http://192.168.1.172:8080/video");
-    if (!cap.isOpened())  // if not success, exit program
-    {
-        std::cout << "Cannot open the video cam" << std::endl;
-        return -1;
-    }
-
-    double dWidth = cap.get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
-    double dHeight = cap.get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
-
-    int frameNum = 0;
-
-    //Main app loop
-    while (1)
-    {
-        cv::Mat frame;
-        frameNum++;
-
+    while (needBrodcasting) {
         char* data = myUDPConnection.ReciveData();
 
-        if (data[0] == 'c') {
+        if (data[0] != (char) 0) {
+            std::cout << data;
+            recIP = data;
             needBrodcasting = false;
         }
 
@@ -79,6 +66,28 @@ int main(int argc, char* argv[])
                 }
             }
         }
+    }
+
+    //cap.open("http://"+recIP+":8080/video");
+    cap.open("http://192.168.1.172:8080/video");
+    if (!cap.isOpened())  // if not success, exit program
+    {
+        std::cout << "Cannot open the video cam" << std::endl;
+        return -1;
+    }
+
+    double dWidth = cap.get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
+    double dHeight = cap.get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
+
+    int frameNum = 0;
+
+    //Main app loop
+    while (1)
+    {
+        char* data = myUDPConnection.ReciveData();
+        cv::Mat frame;
+        frameNum++;
+
 
         bool bSuccess = cap.read(frame); // read a new frame from video
 
@@ -87,10 +96,10 @@ int main(int argc, char* argv[])
             std::cout << "Cannot read a frame from video stream" << std::endl;
             break;
         }
+
         else {
             if (data[0] == 't') {
                 imageProcessor.FindApriltags(frame);
-
             }
         }
     }
