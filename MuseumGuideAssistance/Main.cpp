@@ -69,8 +69,8 @@ int main(int argc, char* argv[])
         }
     }
 
-    //cap.open("http://"+recIP+":8080/video");
-    cap.open("http://192.168.1.172:8080/video");
+    cap.open("http://"+recIP+":8080/video");
+    //cap.open("http://192.168.1.172:8080/video");
     if (!cap.isOpened())  // if not success, exit program
     {
         std::cout << "Cannot open the video cam" << std::endl;
@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
                 if (ID == std::to_string(imageProcessor.FindApriltags(frame))) {
                     myUDPConnection.SendUDPData(nlohmann::to_string(ImageInfo));
                 }
-
+                else myUDPConnection.SendUDPData("");
             }
         }
     }
