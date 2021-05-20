@@ -3,43 +3,37 @@
 
 #include "UDPSocketClient.h"
 #include <iostream>
+#include <conio.h>
 #include <string>
 #include <fstream>
 #include <JSON/json.hpp>
 #include "OpenCVwrapper.h"
 
-struct internalParameters
-{
-    double solverEps;
-    int solverMaxIters;
-    bool fastSolving;
-    double filterAlpha;
-
-    internalParameters()
-    {
-        solverEps = 1e-7;
-        solverMaxIters = 50;
-        fastSolving = true;
-        filterAlpha = 0.1;
-    }
-};
+bool needBrodcasting = true;
 
 int main(int argc, char* argv[])
 {
+    std::cout << "Welcome to Museum Guide Assistance server !" << std::endl;
+    std::string broadcastIp;
+    std::cout << "Let me know your broadcast IP: ";
+    std::cin >> broadcastIp;
+
     OpenCVwrapper imageProcessor;
     nlohmann::json ImageInfo;
-
-    UDPSocket myUDPConnection("192.168.1.255", 3002, 3010);
-    bool needBrodcasting = true;
-    cv::VideoCapture cap; //
-    std::string recIP;
     std::ifstream i("file.json");
     i >> ImageInfo;
+    UDPSocket myUDPConnection(broadcastIp.c_str(), 3002, 3010);
+    
+    std::string recIP;
+    
+    system("CLS");
+
+    std::cout << "Started broadcasting on " << broadcastIp << std::endl;
+
     while (needBrodcasting) {
         char* data = myUDPConnection.ReciveData();
         
         if (data[0] != (char) 0) {
-            std::cout << data;
             recIP = data;
             needBrodcasting = false;
         }
@@ -61,7 +55,9 @@ int main(int argc, char* argv[])
                     if ((offset = line.find(search0, 0)) != std::string::npos)
                     {
                         line.erase(0, 39);
+                        system("CLS");
                         myUDPConnection.SendUDPData(line);
+                        std::cout << "Waiting for response from host";
                         IPFile.close();
                     }
                 }
@@ -69,25 +65,31 @@ int main(int argc, char* argv[])
         }
     }
 
-    cap.open("http://"+recIP+":8080/video");
-    //cap.open("http://192.168.1.172:8080/video");
+    system("CLS");
+
+    std::cout << "IP found ! : " << recIP << std::endl;
+
+    cv::VideoCapture cap; //
+
+    //cap.open("http://"+recIP+":8080/video");
+    cap.open("http://192.168.1.172:8080/video");
+
     if (!cap.isOpened())  // if not success, exit program
     {
         std::cout << "Cannot open the video cam" << std::endl;
         return -1;
     }
 
+    std::cout << "Video capture started." << std::endl;
+
     double dWidth = cap.get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
     double dHeight = cap.get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
-
-    int frameNum = 0;
 
     //Main app loop
     while (1)
     {
         char* data = myUDPConnection.ReciveData();
         cv::Mat frame;
-        frameNum++;
 
 
         bool bSuccess = cap.read(frame); // read a new frame from video
