@@ -48,8 +48,6 @@ int main(int argc, char* argv[])
 
     OpenCVwrapper imageProcessor;
     nlohmann::json ImageInfo;
-    std::ifstream i("file.json");
-    i >> ImageInfo;
     UDPSocket myUDPConnection(broadcastIp.c_str(), 3002, 3010);
     
     std::string recIP;
