@@ -6,6 +6,7 @@
 #include <conio.h>
 #include <string>
 #include <fstream>
+#include "SQLWrapper.h"
 #include <JSON/json.hpp>
 #include "OpenCVwrapper.h"
 
@@ -17,6 +18,33 @@ int main(int argc, char* argv[])
     std::string broadcastIp;
     std::cout << "Let me know your broadcast IP: ";
     std::cin >> broadcastIp;
+    std::string SQLserver;
+    std::string SQLuser;
+    std::string SQLpasswd;
+    std::string SQLdatabase;
+    int port = 3306;
+
+    system("CLS");
+
+    std::cout << "Podaj dane do mySQL:" << std::endl;
+    std::cout << "Server: ";
+    std::cin >> SQLserver ;
+
+    std::cout << "\nUser: ";
+    std::cin >> SQLuser;
+
+    std::cout << "\nPassword: ";
+    std::cin >> SQLpasswd;
+
+    std::cout << "\nDatabase: ";
+    std::cin >> SQLdatabase;
+
+    std::cout << "\nPort: ";
+    std::cin >> port;
+
+    SQLWrapper mySQLServer(SQLserver.c_str(), SQLuser.c_str(), SQLpasswd.c_str(), SQLdatabase.c_str(), port);
+
+    system("PAUSE");
 
     OpenCVwrapper imageProcessor;
     nlohmann::json ImageInfo;
@@ -71,8 +99,8 @@ int main(int argc, char* argv[])
 
     cv::VideoCapture cap; //
 
-    //cap.open("http://"+recIP+":8080/video");
-    cap.open("http://192.168.1.172:8080/video");
+    cap.open("http://"+recIP+":8080/video");
+    //cap.open("http://192.168.1.172:8080/video");
 
     if (!cap.isOpened())  // if not success, exit program
     {
@@ -102,10 +130,14 @@ int main(int argc, char* argv[])
 
         else {
             if (data[0] == 't') {
-                std::string ID = ImageInfo["ID"];
-                std::cout << ID;
-                if (ID == std::to_string(imageProcessor.FindApriltags(frame))) {
-                    myUDPConnection.SendUDPData(nlohmann::to_string(ImageInfo));
+                int tagID = imageProcessor.FindApriltags(frame);
+                if (tagID != 2137) {
+                    if (tagID == 0 || tagID == 10 || tagID == 20) {
+                        myUDPConnection.SendUDPData(nlohmann::to_string(mySQLServer.SQLGetExitsInfo(std::to_string(tagID))));
+                    }
+                    else {
+                        myUDPConnection.SendUDPData(nlohmann::to_string(mySQLServer.SQLGetExibitsIntoJSON("exibits", std::to_string(tagID))));
+                    }
                 }
                 else myUDPConnection.SendUDPData("");
             }

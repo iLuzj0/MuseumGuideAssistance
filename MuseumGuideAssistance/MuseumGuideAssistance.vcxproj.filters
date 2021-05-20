@@ -24,12 +24,18 @@
     <ClCompile Include="UDPSocketClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SQLWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenCVwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UDPSocketClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SQLWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
