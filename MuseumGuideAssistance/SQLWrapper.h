@@ -6,6 +6,7 @@
 /// @brief Klasa umożliwiająca komunikacje z bazą danych
 /// @author Dominik Tekiela
 /// @date 27.05.2021
+/// @warning Twoja baza danych musi zostać zabezpieczona hasłem !
 class SQLWrapper
 {
 	private:
