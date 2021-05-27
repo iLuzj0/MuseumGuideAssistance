@@ -1,6 +1,11 @@
-#include "OpenCVwrapper.h"
+﻿#include "OpenCVwrapper.h"
 
+/// @brief Konstruktor towrzący klasę TagFamily na podstawie podanej rodziny AprilTagów
+/// @param family Rodzina używanych AprilTagów domyślnie ustawiona jest najpopularniejsza rodzina to jest: Tag36h11
 TagFamily tagfamily(DEFAULT_TAG_FAMILY);
+
+/// @brief Konstruktor tworzący klasę TagDetector na podstawie wcześniej utworzonej rodziny
+/// @param TagFamily Przyjmuje klasę TagFamily na podstawie której tworzy ustawienia dla detekcji AprilTagów
 TagDetector tagdetector(tagfamily);
 
 int OpenCVwrapper::FindApriltags(cv::Mat InputImage)

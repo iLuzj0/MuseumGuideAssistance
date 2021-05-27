@@ -9,6 +9,8 @@
 #include "TagDetector.h"
 #include "DebugImage.h"
 #include "CameraUtil.h"
+
+/// Makro definiujące domyślną rodzinę AprilTagów
 #define DEFAULT_TAG_FAMILY "Tag36h11"
 
 #pragma once
@@ -19,6 +21,7 @@ class OpenCVwrapper
 {
 public:
     /// @brief Odnajdywanie tagów na podstawie pobranego zdjecia
+    /// 
     /// @param InputImage to matryca posiadajaca informacje na temat obrazu przesłanego z aplikacji Android
     /// @return Zwraca informacje - jaki tag został znaleziony przez system
     int FindApriltags(cv::Mat InputImage);

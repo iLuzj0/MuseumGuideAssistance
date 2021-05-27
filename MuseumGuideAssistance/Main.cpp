@@ -1,6 +1,4 @@
-
-
-#include <iostream>
+﻿#include <iostream>
 #include <conio.h>
 #include <string>
 #include <fstream>
@@ -9,10 +7,17 @@
 #include "SQLWrapper.h"
 #include "OpenCVwrapper.h"
 
+/// @brief Parametr do określenia czy powinniśmy w danym czasię słać dane po adresie broadcast, zmienia swoją wartość, gdy otwrzymamy odpowiedź od klienta posługującego sie aplikacją na systemie Android
 bool needBrodcasting = true;
 
-int main(int argc, char* argv[])
-{
+/// @brief Główna funkcja prowadząca całość operacji na serwerze. 
+/// Po włączeniu programu musimy podać wszystkie potrzebne dane, do tego aby nasz serwer mógł prawidłowo działać.
+/// Następnie łączymy się z bazą danych postępując zgodnie z komunikatami które zostają wypisane w ekranie konsoli.
+/// Program wchodzi w stan bradcastingu - czeka na odpowiedź klienta używającego aplikacji na systemie Android.
+/// Po połączeniu się z Androidem następuje przesył danych - obraz tworzony podczas robienia zdjęcia w aplikacji jest przetwarzany przez algorytm wyszykiwania tagów.
+/// Po odnalezieniu tagów do Androida zwracana jest wartość JSON która definiuje czego zdjęcie zrobiliśmy.
+/// @return Zwraca 0 przy zakończeniu programu, jeśli wystąpi jakiś problem, program zwróci -1
+int main() {
     std::cout << "Welcome to Museum Guide Assistance server !" << std::endl;
     std::string broadcastIp;
     std::cout << "Let me know your broadcast IP: ";
@@ -27,7 +32,7 @@ int main(int argc, char* argv[])
 
     std::cout << "Podaj dane do mySQL:" << std::endl;
     std::cout << "Server: ";
-    std::cin >> SQLserver ;
+    std::cin >> SQLserver;
 
     std::cout << "\nUser: ";
     std::cin >> SQLuser;
