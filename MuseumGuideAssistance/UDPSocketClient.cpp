@@ -41,7 +41,6 @@ UDPSocket::UDPSocket(const char* IP, int PortIn, int PortOut) :
         std::cout << "Can't bind socket! " << WSAGetLastError() << std::endl;
         return;
     }
-
     this->clientLength = sizeof(client); // The size of the client information
 }
 UDPSocket::~UDPSocket() {

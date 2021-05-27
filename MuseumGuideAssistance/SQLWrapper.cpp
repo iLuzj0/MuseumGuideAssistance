@@ -10,9 +10,9 @@ SQLWrapper::SQLWrapper(const char* server, const char* user, const char* passwor
 		puts("Connection to dabasabe has failed");
 }
 
-nlohmann::json SQLWrapper::SQLGetExibitsIntoJSON(std::string table, std::string tagID) {
+nlohmann::json SQLWrapper::SQLGetExibitsIntoJSON(std::string tagID) {
 	if (conn) {
-		std::string query = "SELECT * FROM " + table;
+		std::string query = "SELECT * FROM exibits";
 		const char* q = query.c_str();
 
 		qstate = mysql_query(conn, q);

@@ -1,13 +1,12 @@
-// MuseumGuideAssistance.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
-#include "UDPSocketClient.h"
+
 #include <iostream>
 #include <conio.h>
 #include <string>
 #include <fstream>
-#include "SQLWrapper.h"
 #include <JSON/json.hpp>
+#include "UDPSocketClient.h"
+#include "SQLWrapper.h"
 #include "OpenCVwrapper.h"
 
 bool needBrodcasting = true;
@@ -68,7 +67,7 @@ int main(int argc, char* argv[])
             std::string line;
             std::ifstream IPFile;
             int offset;
-            const char* search0;      // search pattern
+            const char* search0;// search pattern
             search0 = "IPv4 Address. . . . . . . . . . . :";
             system("ipconfig > ip.txt");
 
@@ -134,7 +133,7 @@ int main(int argc, char* argv[])
                         myUDPConnection.SendUDPData(nlohmann::to_string(mySQLServer.SQLGetExitsInfo(std::to_string(tagID))));
                     }
                     else {
-                        myUDPConnection.SendUDPData(nlohmann::to_string(mySQLServer.SQLGetExibitsIntoJSON("exibits", std::to_string(tagID))));
+                        myUDPConnection.SendUDPData(nlohmann::to_string(mySQLServer.SQLGetExibitsIntoJSON(std::to_string(tagID))));
                     }
                 }
                 else myUDPConnection.SendUDPData("");
