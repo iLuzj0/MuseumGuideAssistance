@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7eudpsocket_20',['~UDPSocket',['../class_u_d_p_socket.html#adb1a5254938e5acf5d44ff7a347e9f0a',1,'UDPSocket']]]
+  ['qstate_18',['qstate',['../class_s_q_l_wrapper.html#a4c9aa66b5c81a8e9088437e090ae9d90',1,'SQLWrapper']]]
 ];

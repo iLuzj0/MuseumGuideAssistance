@@ -15,17 +15,22 @@ class SQLWrapper
 		/// Informacje na temat pokoju
 		nlohmann::json exitData; 
 
-		/// Komunikacja z bazą danych
+		/// Stan komunikacji z bazą danych
 		int qstate; 
+
 		/// Komunikacja z bazą danych
 		MYSQL* conn; 
-		/// Komunikacja z bazą danych
-		MYSQL_ROW row; 
-		/// Komunikacja z bazą danych
-		MYSQL_RES* res; 
+
+		/// Rezultat przeprowadzenia zapytania na bazie danych
+		MYSQL_RES* res;
+
+		/// Wiersz wyciągniety z zapytania, które jest w zmiennej res
+		MYSQL_ROW row;
 
 	public:
 		/// @brief Konstruktor, który łączy nas z bazą danych
+		/// Połącznie jest realizowane za pomocą podanych przez użytkownika aplikacji danych.
+		/// Jeśli połączenie się nie powiedzie otrzymamy o tym kominikat, w przypadku powodzenia program ruszy do przodu.
 		/// @param server Nazwa serwera
 		/// @param user Nazwa użytkownika
 		/// @param password Hasło użytkownika
@@ -33,12 +38,16 @@ class SQLWrapper
 		/// @param port Na jakim porcie będziemy operować
 		SQLWrapper(const char* server, const char* user, const char* password, const char* database, int port);
 
-		/// @brief Metoda, która na podstawie ID znalezionego tagu zwraca nam informacje o eksponacie, który stoi za danym ID
+		/// @brief Metoda, która na podstawie ID znalezionego tagu zwraca nam informacje o eksponacie, który stoi za danym ID.
+		/// Do osiągniecia tego rezultatu na bazie danych przeprowadzone jest zapytanie: SELECT * FROM exibits, zwracające wszystko co potrzebujemy.
+		/// Następnie dana kolumna tabeli jest umieszczana w odpowiedni opis zmiennej JSON.
 		/// @param tagID Zmienna typu string, która przekazuje do bazy danych w zapytaniu ID taga. Na podstawie ID ustalane są informacje na temat eksponatów
 		/// @return Zwraca zmienną typu JSON, która zawiera w sobie informacje na temat eksponatu - nazwe autora, nazwe eksponatu, opis eksponatu, date utworzenia
 		nlohmann::json SQLGetExibitsIntoJSON(std::string tagID);
 
-		/// @brief Metoda, która na podstawie ID taga opisującego pokój zwraca ilość wyjść oraz ilość eksponatów w pokoju
+		/// @brief Metoda, która na podstawie ID taga opisującego pokój zwraca ilość wyjść oraz ilość eksponatów w pokoju.
+		/// Do osiągniecia tego rezultatu na bazie danych przeprowadzone jest zapytanie: SELECT exits.ExitID, exits.Exits, exibits.Exibit FROM exibits INNER JOIN exits ON exibits.ExitID=exits.ExitID.
+		/// Następnie dana kolumna tabeli jest umieszczana w odpowiedni opis zmiennej JSON.
 		/// @param tagID Zmienna typu string, która przekazuje do bazy danych w zapytaniu ID taga. Na podstawie ID ustalane wyjścia i eksponaty w pokoju
 		/// @return Zwraca zmienna typu JSON, która zawiera w sobie informacjena temat pokoju - wyjść i eksponatów w pokoju
 		nlohmann::json SQLGetExitsInfo(std::string tagID);

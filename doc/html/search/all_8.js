@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['udpsocket_17',['UDPSocket',['../class_u_d_p_socket.html',1,'UDPSocket'],['../class_u_d_p_socket.html#a90c1f5857bf070e2bb6b083c035478fa',1,'UDPSocket::UDPSocket()']]],
-  ['udpsocketclient_2ecpp_18',['UDPSocketClient.cpp',['../_u_d_p_socket_client_8cpp.html',1,'']]],
-  ['udpsocketclient_2eh_19',['UDPSocketClient.h',['../_u_d_p_socket_client_8h.html',1,'']]]
+  ['opencvwrapper_13',['OpenCVwrapper',['../class_open_c_vwrapper.html',1,'']]],
+  ['opencvwrapper_2ecpp_14',['OpenCVwrapper.cpp',['../_open_c_vwrapper_8cpp.html',1,'']]],
+  ['opencvwrapper_2eh_15',['OpenCVwrapper.h',['../_open_c_vwrapper_8h.html',1,'']]],
+  ['opticalcenter_16',['opticalCenter',['../class_open_c_vwrapper.html#ad9f111295c3a1a859e03b3706c35e858',1,'OpenCVwrapper']]],
+  ['out_17',['out',['../class_u_d_p_socket.html#acdf43a0e1164289f97d90a2360910c9c',1,'UDPSocket']]]
 ];

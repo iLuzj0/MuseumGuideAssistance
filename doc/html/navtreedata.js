@@ -25,21 +25,22 @@
 var NAVTREE =
 [
   [ "MuseumGuideAssistance", "index.html", [
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+    [ "Klasy", "annotated.html", [
+      [ "Lista klas", "annotated.html", "annotated_dup" ],
+      [ "Indeks klas", "classes.html", null ],
+      [ "Składowe klas", "functions.html", [
+        [ "Wszystko", "functions.html", null ],
+        [ "Funkcje", "functions_func.html", null ],
+        [ "Zmienne", "functions_vars.html", null ]
       ] ]
     ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+    [ "Pliki", "files.html", [
+      [ "Lista plików", "files.html", "files_dup" ],
+      [ "Składowe plików", "globals.html", [
+        [ "Wszystko", "globals.html", null ],
+        [ "Funkcje", "globals_func.html", null ],
+        [ "Zmienne", "globals_vars.html", null ],
+        [ "Definicje", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]

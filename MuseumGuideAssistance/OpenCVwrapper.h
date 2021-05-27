@@ -21,7 +21,9 @@ class OpenCVwrapper
 {
 public:
     /// @brief Odnajdywanie tagów na podstawie pobranego zdjecia
-    /// 
+    /// Ze zdjęcia pozyskiwana jest wysokość i szerokość, następnie algorytm detekcji szuka na zdjęciu AprilTagów.
+    /// Jeśli tag zostanie znaleziony, zwracane jest jego ID.
+    /// Jeśli na zdjęciu znajduje sie więcej niż jeden tag (do czego nie powinno dojść), wtedy aplikacja zwraca tag o mniejszym ID.
     /// @param InputImage to matryca posiadajaca informacje na temat obrazu przesłanego z aplikacji Android
     /// @return Zwraca informacje - jaki tag został znaleziony przez system
     int FindApriltags(cv::Mat InputImage);

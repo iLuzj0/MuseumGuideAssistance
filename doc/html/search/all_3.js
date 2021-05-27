@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['needbrodcasting_4',['needBrodcasting',['../_main_8cpp.html#a1a706cea7d0b475fcedc8e62a7255694',1,'Main.cpp']]]
+  ['exibitdata_6',['exibitData',['../class_s_q_l_wrapper.html#ad96dad1027bcc22599d7a4b4f2a4480e',1,'SQLWrapper']]],
+  ['exitdata_7',['exitData',['../class_s_q_l_wrapper.html#aee186e951f98b1eb00c2c25eb82249a3',1,'SQLWrapper']]]
 ];

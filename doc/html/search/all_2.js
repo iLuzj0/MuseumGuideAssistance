@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['main_2',['main',['../_main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'Main.cpp']]],
-  ['main_2ecpp_3',['Main.cpp',['../_main_8cpp.html',1,'']]]
+  ['default_5ftag_5ffamily_4',['DEFAULT_TAG_FAMILY',['../_open_c_vwrapper_8h.html#a1ee6b9cfde1f7b5bc60c12b8e119dad3',1,'OpenCVwrapper.h']]],
+  ['detections_5',['detections',['../class_open_c_vwrapper.html#af92e9826ba4c17771796c1ae07f7dd06',1,'OpenCVwrapper']]]
 ];

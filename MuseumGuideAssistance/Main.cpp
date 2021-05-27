@@ -17,6 +17,8 @@ bool needBrodcasting = true;
 /// Po połączeniu się z Androidem następuje przesył danych - obraz tworzony podczas robienia zdjęcia w aplikacji jest przetwarzany przez algorytm wyszykiwania tagów.
 /// Po odnalezieniu tagów do Androida zwracana jest wartość JSON która definiuje czego zdjęcie zrobiliśmy.
 /// @return Zwraca 0 przy zakończeniu programu, jeśli wystąpi jakiś problem, program zwróci -1
+/// @author Dominik Tekiela
+/// @date 27.05.2021
 int main() {
     std::cout << "Welcome to Museum Guide Assistance server !" << std::endl;
     std::string broadcastIp;

@@ -7,22 +7,31 @@
 /// @author Dominik Tekiela
 /// @date 27.05.2021
 class UDPSocket {
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+    /// @brief Wyjściowy socket używany do połączenia klient - serwer
     SOCKET out;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Wejściowy socket używany do połączenia klient - serwer
     SOCKET in;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Zmienna serwera do obsługi winsock
     sockaddr_in server;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Podpowiedzi dla servera, głównie używane do informawania serwera o klientach
     sockaddr_in serverHint;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Zmienna klienta do obsługi winsock
     sockaddr_in client;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Wielkość danych otrzymywanych od klienta
     int clientLength;
-    /// @brief Zmienne do utworzenia połączenia klient - serwer 
+
+    /// @brief Bufor dla przychodzących danych
     char buf[1024];
 public:
-    /// @brief Konstruktor łączący sie z danym IP na porcie OUT.
+    /// @brief Konstruktor startujący winsock
+    /// Na podstawie uzyskanych IP tworzymy strukturę podpowiedzi dla serwera.
+    /// Tworzymy socket UDP.
+    /// Łączymy nasz socket z adresem IP oraz portem.
     /// @param IP IP komputera, z którym nasza aplikacja ma sie łączyć
     /// @param PortIn Port na otrzymywanie danych od połączonego klienta
     /// @param PortOut Port, na który wysyłane są binarnie dane
@@ -32,10 +41,12 @@ public:
     ~UDPSocket();
 
     /// @brief Wysyła string do klienta podanego w konstruktorze
+    /// Użyta jest do tego metoda sendto.
     /// @param s Zmienna typu string, konwertowana jest na bity i wysyłana przez UDP do klienta
     void SendUDPData(std::string s);
 
     /// @brief Otwiera nasz serwer na otrzymywanie danych od klienta
+    /// Używana jest metoda recv, która nie blokuje naszego socketu 
     /// @return Zwraca tablice char* z otrzymanymi danymi
     char* ReciveData();
 };

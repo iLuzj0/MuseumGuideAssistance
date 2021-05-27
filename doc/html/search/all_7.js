@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['tagdetector_15',['tagdetector',['../_open_c_vwrapper_8cpp.html#ab39477bd524abe82d49dfe1e33b36a8c',1,'OpenCVwrapper.cpp']]],
-  ['tagfamily_16',['tagfamily',['../_open_c_vwrapper_8cpp.html#adf98835e6215bcda393996720102e337',1,'OpenCVwrapper.cpp']]]
+  ['needbrodcasting_12',['needBrodcasting',['../_main_8cpp.html#a1a706cea7d0b475fcedc8e62a7255694',1,'Main.cpp']]]
 ];
