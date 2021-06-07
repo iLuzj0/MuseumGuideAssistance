@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['opencvwrapper_37',['OpenCVwrapper',['../class_open_c_vwrapper.html',1,'']]]
+  ['opencvwrapper_39',['OpenCVwrapper',['../class_open_c_vwrapper.html',1,'']]]
 ];

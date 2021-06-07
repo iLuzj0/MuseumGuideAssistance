@@ -25,6 +25,22 @@
 var NAVTREE =
 [
   [ "MuseumGuideAssistance", "index.html", [
+    [ "Dokumentacja aplikacji Android", "_u_e4_docs.html", [
+      [ "Menu", "_u_e4_docs.html#subUE4Docs", [
+        [ "1.Start", "_u_e4_docs.html#subMenu", null ],
+        [ "2.Information", "_u_e4_docs.html#subMenu2", null ],
+        [ "3.Exit", "_u_e4_docs.html#subMenu3", null ]
+      ] ],
+      [ "Informacja", "_u_e4_docs.html#subUE4Docs2", [
+        [ "1.Ikona wyjścia", "_u_e4_docs.html#Info", null ]
+      ] ],
+      [ "Główny panel", "_u_e4_docs.html#subUE4Docs3", [
+        [ "1.Ostatnio zrobiony obraz", "_u_e4_docs.html#Main1", null ],
+        [ "2.Zrób zdjęcie", "_u_e4_docs.html#Main2", null ],
+        [ "3.Ikona wyjśca", "_u_e4_docs.html#Main3", null ],
+        [ "4.Widok aparatu", "_u_e4_docs.html#Main4", null ]
+      ] ]
+    ] ],
     [ "Klasy", "annotated.html", [
       [ "Lista klas", "annotated.html", "annotated_dup" ],
       [ "Indeks klas", "classes.html", null ],
