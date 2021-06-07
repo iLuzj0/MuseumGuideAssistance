@@ -104,7 +104,7 @@ int main() {
     cv::VideoCapture cap; //
 
     cap.open("http://"+recIP+":8080/video");
-    //cap.open("http://192.168.1.172:8080/video");
+    //vintage cap.open("http://192.168.1.172:8080/video");
 
     if (!cap.isOpened())  // if not success, exit program
     {
