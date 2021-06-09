@@ -1,4 +1,7 @@
 # MuseumGuideAssistance
+# Autor
+Dominik Tekiela
+Uniwersytet Pedagogiczny, grupa L4
 # Wstęp
 Projekt utworzony w ramach zajęć inżynierskich. Współdziała z programem na telefony z systemem Android utworzonym w silniku UnrealEngine4 - https://github.com/iLuzj0/MuseumGuideAssistanceUE4
 
